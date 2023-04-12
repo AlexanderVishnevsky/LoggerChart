@@ -22,6 +22,9 @@
             "@common/*": [
                 "components/common/*"
             ],
+            "@ts-icons": [
+                "components/common/icons/index"
+            ],
             "@theme": [
                 "src/configs/theme"
             ]

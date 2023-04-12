@@ -9,14 +9,19 @@ import { fetcher } from '@/utils/fetcher';
 
 export default function Home() {
     const { data, error } = useSWR<string | any>('/api/upload-csv', fetcher);
-    const [checked, setChecked] = useState(['All', 'Unique']);
+    const [checked, setChecked] = useState(['All', 'Unique', 'Quiz']);
 
     if (error) {
         return <>{error}</>;
     }
 
     if (data) {
-        const chartData = JSON.parse(data).slice(2);
+        let chartData: Array<any> = JSON.parse(data).slice(2);
+
+        if (!checked.find((i) => i === 'Quiz')) {
+            chartData = chartData.filter((item) => !item.event.includes('Tutorial Step'));
+        }
+
         return (
             <Box
                 css={{ height: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
@@ -60,6 +65,9 @@ export default function Home() {
                     </Checkbox>
                     <Checkbox value="Unique" color={'success'}>
                         Unique events
+                    </Checkbox>
+                    <Checkbox value="Quiz" color={'warning'}>
+                        With Quiz events
                     </Checkbox>
                 </Checkbox.Group>
             </Box>

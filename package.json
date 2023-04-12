@@ -4,16 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "echo \"---> BUILD: \" && next build",
     "start": "next start",
-    "lint": "tsc --build --clean && eslint --ext .ts,.tsx ./ --quiet --fix",
-    "post-update": "echo \"---- UPDATE DEPENDENCIES: ----\" && yarn upgrade --latest",
+    "lint": "echo \"---> LINT: \" && tsc --build --clean && eslint --ext .ts,.tsx ./ --quiet --fix",
+    "post-update": "echo \"---> DEPENDENCES UPDATE: \" && yarn upgrade --latest",
     "pre-commit": "yarn run lint && yarn run build",
+    "prod-run": "yarn run build && yarn run start",
     "serve": "next start",
     "webpack-analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.12",
+    "recharts": "^2.5.0",
     "next": "^13.3.0",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",

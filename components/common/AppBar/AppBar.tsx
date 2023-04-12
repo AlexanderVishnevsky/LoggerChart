@@ -5,9 +5,7 @@ import { useTheme as useNextTheme } from 'next-themes';
 
 import Layout from '../Layout';
 
-const collapseItems = [
-    'Stay-Fit',
-];
+const collapseItems = ['Stay-Fit'];
 
 const AppBar = (): JSX.Element => {
     const { setTheme } = useNextTheme();

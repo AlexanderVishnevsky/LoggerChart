@@ -1,20 +1,58 @@
 {
+  "name": "chart",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "tsc --build --clean && eslint --ext .ts,.tsx ./ --quiet --fix",
+    "post-update": "echo \"---- UPDATE DEPENDENCIES: ----\" && yarn upgrade --latest",
+    "pre-commit": "yarn run lint && yarn run build",
+    "serve": "next start",
+    "webpack-analyze": "ANALYZE=true next build"
   },
   "dependencies": {
-    "@nextui-org/react": "1.0.0-beta.9",
-    "next": "latest",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@nextui-org/react": "^1.0.0-beta.12",
+    "next": "^13.3.0",
+    "next-themes": "^0.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "18.0.3",
-    "@types/react": "18.0.15",
-    "@types/react-dom": "18.0.6",
-    "typescript": "4.7.4"
+    "@next/bundle-analyzer": "^13.3.0",
+    "@next/eslint-plugin-next": "^13.3.0",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.35",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-config-next": "^13.3.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

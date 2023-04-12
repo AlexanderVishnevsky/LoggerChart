@@ -3,10 +3,10 @@ import { NextPage } from 'next';
 import { DynamicMixChart } from '@modules/Charts/MixChart';
 import { Box } from '@common/Layout/Layout.styles';
 
-const StayFit: FC<NextPage> = () => (
+const Slug: FC<NextPage> = () => (
     <Box css={{ height: '50vh' }}>
         <DynamicMixChart />
     </Box>
 );
 
-export default StayFit;
+export default Slug;

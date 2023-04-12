@@ -6,15 +6,7 @@ import { useTheme as useNextTheme } from 'next-themes';
 import Layout from '../Layout';
 
 const collapseItems = [
-    'Features',
-    'Customers',
-    'Pricing',
-    'Company',
-    'Legal',
-    'Team',
-    'Help & Feedback',
-    'Login',
-    'Sign Up',
+    'Stay-Fit',
 ];
 
 const AppBar = (): JSX.Element => {
@@ -25,17 +17,14 @@ const AppBar = (): JSX.Element => {
             <Navbar isBordered variant="sticky" maxWidth={'fluid'}>
                 <Navbar.Brand>
                     <Navbar.Toggle aria-label="toggle navigation" />
-                    <Text b color="inherit" hideIn="xs">
+                    <Text b color="inherit" hideIn="xs" css={{ margin: '0 12px' }}>
                         Chart
                     </Text>
                 </Navbar.Brand>
                 <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-                    <Navbar.Link href="#">Features</Navbar.Link>
-                    <Navbar.Link isActive href="#">
-                        Customers
+                    <Navbar.Link isActive href={'/charts/stay-fit'}>
+                        Stay-Fit
                     </Navbar.Link>
-                    <Navbar.Link href="#">Pricing</Navbar.Link>
-                    <Navbar.Link href="#">Company</Navbar.Link>
                 </Navbar.Content>
                 <Navbar.Content>
                     <Switch

@@ -1,138 +1,62 @@
-import { Checkbox, Switch, Text } from '@nextui-org/react';
+import { Card, Text } from '@nextui-org/react';
 
-import useSWR from 'swr';
-import {
-    Bar,
-    BarChart,
-    Line,
-    LineChart,
-    CartesianGrid,
-    Legend,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from 'recharts';
 import { Box } from '@common/Layout/Layout.styles';
-import { useState } from 'react';
+import { FC } from 'react';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
-import { fetcher } from '@/utils/fetcher';
-
-export default function Home() {
-    const { data, error } = useSWR<string | any>('/api/upload-csv', fetcher);
-    const [selected, setSelected] = useState(['All', 'Unique', 'Quiz']);
-    const [checked, setChecked] = useState(false);
-
-    if (error) {
-        return <>{error}</>;
-    }
-
-    if (data) {
-        let chartData: Array<any> = JSON.parse(data).slice(2);
-
-        if (!selected.find((i) => i === 'Quiz')) {
-            chartData = chartData.filter((item) => !item.event.includes('Tutorial Step'));
-        }
-
-        const chartContent = () => (
-            <>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="event" padding={{ left: 30, right: 30 }} />
-                <YAxis />
-                <Tooltip label={'event'} />
-                <Legend />
-            </>
-        );
-
-        return (
-            <Box
-                css={{ height: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+const Index: FC<NextPage> = () => {
+    const router = useRouter();
+    return (
+        <Box
+            css={{
+                height: '50vh',
+                width: '30%',
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                margin: '0 auto',
+            }}
+        >
+            <Card
+                isPressable
+                isHoverable
+                variant="bordered"
+                css={{ mw: '200px', h: '200px' }}
+                onClick={() => router.push('/charts/stay-fit')}
             >
-                {checked ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
-                            width={500}
-                            height={300}
-                            data={chartData}
-                            margin={{
-                                top: 20,
-                                right: 30,
-                                left: 20,
-                                bottom: 10,
-                            }}
-                        >
-                            {chartContent()}
-                            {selected.find((i) => i === 'All') && (
-                                <Line type="monotone" dataKey="all" stroke="#8884d8" activeDot={{ r: 8 }} />
-                            )}
-                            {selected.find((i) => i === 'Unique') && (
-                                <Line type="monotone" dataKey="unique" stroke="#82ca9d" />
-                            )}
-                        </LineChart>
-                    </ResponsiveContainer>
-                ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                            width={500}
-                            height={300}
-                            data={chartData}
-                            margin={{
-                                top: 20,
-                                right: 30,
-                                left: 20,
-                                bottom: 5,
-                            }}
-                        >
-                            {chartContent()}
-                            {selected.find((i) => i === 'All') && (
-                                <Bar dataKey={'all'} stackId="a" fill="#8884d8" barSize={20} />
-                            )}
-                            {selected.find((i) => i === 'Unique') && (
-                                <Bar dataKey={'unique'} stackId="b" fill="#82ca9d" barSize={20} />
-                            )}
-                        </BarChart>
-                    </ResponsiveContainer>
-                )}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Checkbox.Group
-                        css={{ mt: 20 }}
-                        label="Chart props"
-                        orientation="vertical"
-                        color="secondary"
-                        onChange={setSelected}
-                        value={selected}
-                    >
-                        <Checkbox value="All" color={'gradient'}>
-                            All events
-                        </Checkbox>
-                        <Checkbox value="Unique" color={'success'}>
-                            Unique events
-                        </Checkbox>
-                        <Checkbox value="Quiz" color={'warning'}>
-                            With Quiz events
-                        </Checkbox>
-                    </Checkbox.Group>
+                <Card.Body css={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Text
-                        h6
+                        h4
                         size={24}
                         css={{
                             textGradient: '45deg, $blue600 -20%, $pink600 50%',
-                            display: 'flex',
                         }}
-                        weight="bold"
                     >
-                        <Switch
-                            css={{ ml: '50px', mr: '12px' }}
-                            checked={checked}
-                            onChange={() => setChecked((pr) => !pr)}
-                            bordered
-                            size="md"
-                            color="secondary"
-                        />
-                        {checked ? 'Line chart' : 'Diagram chart'}
+                        Stay-Fit Chart
                     </Text>
-                </div>
-            </Box>
-        );
-    }
-}
+                </Card.Body>
+            </Card>
+            <Card
+                isPressable
+                isHoverable
+                variant="bordered"
+                css={{ mw: '200px', h: '200px' }}
+                onClick={() => router.push('/charts/demo')}
+            >
+                <Card.Body css={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                        h4
+                        size={24}
+                        css={{
+                            textGradient: '45deg, $yellow600 -20%, $red600 100%',
+                        }}
+                    >
+                        Demo Chart
+                    </Text>
+                </Card.Body>
+            </Card>
+        </Box>
+    );
+};
+export default Index;

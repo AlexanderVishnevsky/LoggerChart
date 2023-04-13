@@ -2,26 +2,37 @@ import { Navbar, Button, Link, Text, useTheme, Switch } from '@nextui-org/react'
 
 import { SunIcon, MoonIcon } from '@ts-icons';
 import { useTheme as useNextTheme } from 'next-themes';
+import { useRouter } from 'next/router';
 
 import Layout from '../Layout';
 
-const collapseItems = ['Stay-Fit'];
+const collapseItems = [
+    { name: 'Stay-Fit', url: '/charts/stay-fit' },
+    { name: 'Demo', url: '/charts/demo' },
+];
 
 const AppBar = (): JSX.Element => {
     const { setTheme } = useNextTheme();
     const { isDark, type } = useTheme();
+    const { pathname } = useRouter();
+
     return (
         <Layout>
             <Navbar isBordered variant="sticky" maxWidth={'fluid'}>
                 <Navbar.Brand>
                     <Navbar.Toggle aria-label="toggle navigation" />
-                    <Text b color="inherit" hideIn="xs" css={{ margin: '0 12px' }}>
-                        Chart
-                    </Text>
+                    <Link href={'/'} color="text">
+                        <Text b color="inherit" hideIn="xs" css={{ margin: '0 12px' }}>
+                            Chart
+                        </Text>
+                    </Link>
                 </Navbar.Brand>
                 <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-                    <Navbar.Link isActive href={'/charts/stay-fit'}>
+                    <Navbar.Link isActive={pathname.includes('slug')} href={'/charts/stay-fit'}>
                         Stay-Fit
+                    </Navbar.Link>
+                    <Navbar.Link isActive={pathname === '/charts/demo'} href={'/charts/demo'}>
+                        Demo
                     </Navbar.Link>
                 </Navbar.Content>
                 <Navbar.Content>
@@ -43,15 +54,15 @@ const AppBar = (): JSX.Element => {
                 </Navbar.Content>
                 <Navbar.Collapse>
                     {collapseItems.map((item, index) => (
-                        <Navbar.CollapseItem key={item}>
+                        <Navbar.CollapseItem key={index}>
                             <Link
                                 color="inherit"
                                 css={{
                                     minWidth: '100%',
                                 }}
-                                href="#"
+                                href={item.url}
                             >
-                                {item}
+                                {item.name}
                             </Link>
                         </Navbar.CollapseItem>
                     ))}

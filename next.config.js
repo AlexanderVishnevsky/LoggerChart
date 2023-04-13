@@ -2,12 +2,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
 
-module.exports = withBundleAnalyzer({
-    reactStrictMode: true,
-    extends: ['plugin:@next/next/recommended'],
-    eslint: {
-        // Warning: This allows production builds to successfully complete even if
-        // your project has ESLint errors.
-        ignoreDuringBuilds: true,
-    },
-});
+module.exports = () => {
+    const plugins = [withBundleAnalyzer];
+    return plugins.reduce((acc, next) => next(acc), {
+        trailingSlash: false,
+        reactStrictMode: true,
+        extends: ['plugin:@next/next/recommended'],
+        swcMinify: true,
+        eslint: {
+            ignoreDuringBuilds: true,
+        },
+    });
+};

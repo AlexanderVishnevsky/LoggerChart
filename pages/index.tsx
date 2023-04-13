@@ -1,7 +1,18 @@
-import { Checkbox } from '@nextui-org/react';
+import { Checkbox, Switch, Text } from '@nextui-org/react';
 
 import useSWR from 'swr';
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+    Bar,
+    BarChart,
+    Line,
+    LineChart,
+    CartesianGrid,
+    Legend,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from 'recharts';
 import { Box } from '@common/Layout/Layout.styles';
 import { useState } from 'react';
 
@@ -9,7 +20,8 @@ import { fetcher } from '@/utils/fetcher';
 
 export default function Home() {
     const { data, error } = useSWR<string | any>('/api/upload-csv', fetcher);
-    const [checked, setChecked] = useState(['All', 'Unique', 'Quiz']);
+    const [selected, setSelected] = useState(['All', 'Unique', 'Quiz']);
+    const [checked, setChecked] = useState(false);
 
     if (error) {
         return <>{error}</>;
@@ -18,58 +30,108 @@ export default function Home() {
     if (data) {
         let chartData: Array<any> = JSON.parse(data).slice(2);
 
-        if (!checked.find((i) => i === 'Quiz')) {
+        if (!selected.find((i) => i === 'Quiz')) {
             chartData = chartData.filter((item) => !item.event.includes('Tutorial Step'));
         }
 
+        const chartContent = () => (
+            <>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="event" padding={{ left: 30, right: 30 }} />
+                <YAxis />
+                <Tooltip label={'event'} />
+                <Legend />
+            </>
+        );
+
         return (
             <Box
-                css={{ height: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+                css={{ height: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
             >
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                        width={500}
-                        height={300}
-                        data={chartData}
-                        margin={{
-                            top: 20,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
+                {checked ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                        <LineChart
+                            width={500}
+                            height={300}
+                            data={chartData}
+                            margin={{
+                                top: 20,
+                                right: 30,
+                                left: 20,
+                                bottom: 10,
+                            }}
+                        >
+                            {chartContent()}
+                            {selected.find((i) => i === 'All') && (
+                                <Line type="monotone" dataKey="all" stroke="#8884d8" activeDot={{ r: 8 }} />
+                            )}
+                            {selected.find((i) => i === 'Unique') && (
+                                <Line type="monotone" dataKey="unique" stroke="#82ca9d" />
+                            )}
+                        </LineChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                            width={500}
+                            height={300}
+                            data={chartData}
+                            margin={{
+                                top: 20,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}
+                        >
+                            {chartContent()}
+                            {selected.find((i) => i === 'All') && (
+                                <Bar dataKey={'all'} stackId="a" fill="#8884d8" barSize={20} />
+                            )}
+                            {selected.find((i) => i === 'Unique') && (
+                                <Bar dataKey={'unique'} stackId="b" fill="#82ca9d" barSize={20} />
+                            )}
+                        </BarChart>
+                    </ResponsiveContainer>
+                )}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Checkbox.Group
+                        css={{ mt: 20 }}
+                        label="Chart props"
+                        orientation="vertical"
+                        color="secondary"
+                        onChange={setSelected}
+                        value={selected}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="event" />
-                        <YAxis />
-                        <Tooltip label={'event'} />
-                        <Legend />
-                        {checked.find((i) => i === 'All') && (
-                            <Bar dataKey={'all'} stackId="a" fill="#8884d8" barSize={20} />
-                        )}
-                        {checked.find((i) => i === 'Unique') && (
-                            <Bar dataKey={'unique'} stackId="b" fill="#82ca9d" barSize={20} />
-                        )}
-                        {/*<Bar dataKey={'unique'} fill="#ffc658" />*/}
-                    </BarChart>
-                </ResponsiveContainer>
-                <Checkbox.Group
-                    css={{ mt: 20 }}
-                    label="Chart props"
-                    orientation="horizontal"
-                    color="secondary"
-                    onChange={setChecked}
-                    value={checked}
-                >
-                    <Checkbox value="All" color={'gradient'}>
-                        All events
-                    </Checkbox>
-                    <Checkbox value="Unique" color={'success'}>
-                        Unique events
-                    </Checkbox>
-                    <Checkbox value="Quiz" color={'warning'}>
-                        With Quiz events
-                    </Checkbox>
-                </Checkbox.Group>
+                        <Checkbox value="All" color={'gradient'}>
+                            All events
+                        </Checkbox>
+                        <Checkbox value="Unique" color={'success'}>
+                            Unique events
+                        </Checkbox>
+                        <Checkbox value="Quiz" color={'warning'}>
+                            With Quiz events
+                        </Checkbox>
+                    </Checkbox.Group>
+                    <Text
+                        h6
+                        size={24}
+                        css={{
+                            textGradient: '45deg, $blue600 -20%, $pink600 50%',
+                            display: 'flex',
+                        }}
+                        weight="bold"
+                    >
+                        <Switch
+                            css={{ ml: '50px', mr: '12px' }}
+                            checked={checked}
+                            onChange={() => setChecked((pr) => !pr)}
+                            bordered
+                            size="md"
+                            color="secondary"
+                        />
+                        {checked ? 'Line chart' : 'Diagram chart'}
+                    </Text>
+                </div>
             </Box>
         );
     }

@@ -12,12 +12,9 @@ export default async function handler(req: any, res: any, name: string) {
         .createReadStream('csv/events.csv')
         .pipe(parse({ delimiter: ',' }))
         .on('data', (r) => {
-            console.log(r);
             data.push({ event: r[0], all: r[1], unique: r[2], date: r[3], dateEnd: r[4] });
         })
         .on('end', () => {
-            console.log(data);
-            debugger;
             res.status(200).json(JSON.stringify(data));
         });
 

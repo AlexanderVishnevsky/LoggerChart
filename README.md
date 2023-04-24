@@ -7,7 +7,7 @@
 #### Make charts from CSV-files
 
 <br/>
-<hr style="width:100%;height:2px;background: linear-gradient(0.25turn, rgba(245,165,36,0.8), rgba(243,18,96,1))"/>
+<hr style="width:100%;height:2px;background:linear-gradient(0.25turn, rgba(245,165,36,0.8),rgba(243,18,96,1));"/>
 
 <div align="left">
 
@@ -16,8 +16,10 @@
 <br/>
 
 <div style="display:flex;flex-direction: row;align-items: center;justify-content: space-around">
+<div align="center">
 
 [![Vercel](https://img.shields.io/badge/Deployed%20on-VERCEL-black?style=for-the-badge&logo?link=https://run-app-steel.vercel.app/login)](https://logger-chart.vercel.app/)
+</div>
 </div>
 
 
@@ -32,7 +34,7 @@
 yarn run dev
 ```
 
-<hr style="width:100%;height:2px;background: linear-gradient(0.25turn, rgba(245,165,36,0.8), rgba(243,18,96,1))"/>
+<hr style="width:100%;height:2px;background:linear-gradient(0.25turn, rgba(245,165,36,0.8),rgba(243,18,96,1));"/>
 
 
 <div align="left">

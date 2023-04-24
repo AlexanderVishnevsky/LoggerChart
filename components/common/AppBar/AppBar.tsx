@@ -1,14 +1,17 @@
+import { useRouter } from 'next/router';
+
 import { Navbar, Button, Link, Text, useTheme, Switch } from '@nextui-org/react';
 
 import { SunIcon, MoonIcon } from '@ts-icons';
 import { useTheme as useNextTheme } from 'next-themes';
-import { useRouter } from 'next/router';
+
+import { Routes } from '@/routing/routes';
 
 import Layout from '../Layout';
 
 const collapseItems = [
-    { name: 'Stay-Fit', url: '/charts/stay-fit' },
-    { name: 'Demo', url: '/charts/demo' },
+    { name: 'Column Chart', url: Routes.COLUMN_CHART },
+    { name: 'Mix Chart', url: Routes.MIX_CHART },
 ];
 
 const AppBar = (): JSX.Element => {
@@ -21,18 +24,18 @@ const AppBar = (): JSX.Element => {
             <Navbar isBordered variant="sticky" maxWidth={'fluid'}>
                 <Navbar.Brand>
                     <Navbar.Toggle aria-label="toggle navigation" />
-                    <Link href={'/'} color="text">
+                    <Link href={Routes.MAIN} color="text">
                         <Text b color="inherit" hideIn="xs" css={{ margin: '0 12px' }}>
                             Chart
                         </Text>
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-                    <Navbar.Link isActive={pathname.includes('slug')} href={'/charts/stay-fit'}>
-                        Stay-Fit
+                    <Navbar.Link isActive={pathname.includes('slug')} href={Routes.COLUMN_CHART}>
+                        Column chart
                     </Navbar.Link>
-                    <Navbar.Link isActive={pathname === '/charts/demo'} href={'/charts/demo'}>
-                        Demo
+                    <Navbar.Link isActive={pathname === Routes.MIX_CHART} href={Routes.MIX_CHART}>
+                        Mix Chart
                     </Navbar.Link>
                 </Navbar.Content>
                 <Navbar.Content>

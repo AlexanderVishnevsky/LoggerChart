@@ -1,10 +1,11 @@
 import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+
 import { NextUIProvider, useSSR } from '@nextui-org/react';
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import type { AppProps } from 'next/app';
 import { darkTheme, lightTheme } from '@theme';
-import AppBar from '@common/AppBar';
+import { DynamicAppBar } from '@common/AppBar';
 
 const ChartApp = ({ Component, pageProps }: AppProps) => {
     const { isBrowser } = useSSR();
@@ -20,7 +21,7 @@ const ChartApp = ({ Component, pageProps }: AppProps) => {
                     }}
                 >
                     <NextUIProvider>
-                        <AppBar />
+                        <DynamicAppBar />
                         <Component {...pageProps} />
                     </NextUIProvider>
                 </NextThemesProvider>

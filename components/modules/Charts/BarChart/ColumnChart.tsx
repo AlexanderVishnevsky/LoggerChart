@@ -14,14 +14,14 @@ import {
     YAxis,
 } from 'recharts';
 
-const StayFitChart = ({ data }: { data: string }): JSX.Element => {
-    const [selected, setSelected] = useState(['All', 'Unique', 'Quiz']);
+const ColumnChart = ({ data }: { data: string }): JSX.Element => {
+    const [selected, setSelected] = useState(['All', 'Unique', 'Event']);
     const [checked, setChecked] = useState(false);
 
     let chartData: Array<any> = JSON.parse(data).slice(2);
 
-    if (!selected.find((i) => i === 'Quiz')) {
-        chartData = chartData.filter((item) => !item.event?.includes('Tutorial Step'));
+    if (!selected.find((i) => i === 'Event')) {
+        chartData = chartData.filter((item) => !item.event?.includes('Event'));
     }
 
     const chartContent = () => (
@@ -96,8 +96,8 @@ const StayFitChart = ({ data }: { data: string }): JSX.Element => {
                     <Checkbox value="Unique" color={'success'}>
                         Unique events
                     </Checkbox>
-                    <Checkbox value="Quiz" color={'warning'}>
-                        With Quiz events
+                    <Checkbox value="Event" color={'warning'}>
+                        With Events
                     </Checkbox>
                 </Checkbox.Group>
                 <Text
@@ -123,4 +123,4 @@ const StayFitChart = ({ data }: { data: string }): JSX.Element => {
         </>
     );
 };
-export default StayFitChart;
+export default ColumnChart;

@@ -30,6 +30,11 @@ module.exports = {
             {
                 pathGroups: [
                     {
+                        pattern: 'next/**',
+                        group: 'external',
+                        position: 'before',
+                    },
+                    {
                         pattern: '@nextui-org/react',
                         group: 'external',
                         position: 'before',

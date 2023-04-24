@@ -1,35 +1,26 @@
-import { Loading } from '@nextui-org/react';
+import { Loading, Text } from '@nextui-org/react';
 
-import { FC } from 'react';
-import { Box } from '@common/Layout/Layout.styles';
-import useSWR from 'swr';
 import { NextPage } from 'next';
-import { DynamicStayFitChart } from '@modules/Charts/BarChart';
+import { FC } from 'react';
+import useSWR from 'swr';
+import { DynamicColumnChart } from '@modules/Charts/BarChart';
+import { ChartsLayout } from '@modules/Charts/Charts.styles';
 
 import { fetcher } from '@/utils/fetcher';
 
-const Slug: FC<NextPage> = () => {
+const SecondChart: FC<NextPage> = () => {
     const { data, error, isLoading } = useSWR<string | any>('/api/upload-csv', fetcher);
 
     return (
-        <Box
-            css={{
-                height: '80vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-            }}
-        >
-            {error && 'Something went wrong...'}
+        <ChartsLayout>
+            {error && <Text color={'error'}>Something went wrong...</Text>}
             {isLoading || typeof data !== 'string' ? (
                 <Loading type="gradient" size="xl" />
             ) : (
-                <DynamicStayFitChart data={data} />
+                <DynamicColumnChart data={data} />
             )}
-        </Box>
+        </ChartsLayout>
     );
 };
 
-export default Slug;
+export default SecondChart;

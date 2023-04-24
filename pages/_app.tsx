@@ -7,10 +7,13 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { darkTheme, lightTheme } from '@theme';
 import { DynamicAppBar } from '@common/AppBar';
 
+import InitScripts from '@/configs/InitScripts';
+
 const ChartApp = ({ Component, pageProps }: AppProps) => {
     const { isBrowser } = useSSR();
     return (
         <>
+            <InitScripts />
             {isBrowser && (
                 <NextThemesProvider
                     defaultTheme="system"

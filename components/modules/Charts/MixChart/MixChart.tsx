@@ -18,7 +18,7 @@ const MixChart = (): JSX.Element => (
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip />
+            <Tooltip contentStyle={{ color: 'var(--nextui-colors-black)' }} />
             <Legend />
             <Bar dataKey="pv" stackId="a" fill="#8884d8" />
             <Bar dataKey="amt" stackId="a" fill="#82ca9d" />

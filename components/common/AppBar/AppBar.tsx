@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { Navbar, Link, Text, useTheme } from '@nextui-org/react';
+import { Navbar, Link, Text } from '@nextui-org/react';
 
 import { FavIcon } from '@ts-icons';
-import { useTheme as useNextTheme } from 'next-themes';
 import { DynamicThemeSwitcher } from '@common/AppBar/components/ThemeSwitcher';
 import { DynamicDrawer } from '@common/AppBar/components/Drawer';
 

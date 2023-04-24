@@ -9,7 +9,7 @@ const DropDown = (): JSX.Element => (
         </Navbar.Item>
         <Dropdown.Menu
             aria-label="User menu actions"
-            color="secondary"
+            color="primary"
             onAction={(actionKey) => console.log({ actionKey })}
         >
             <Dropdown.Item key="profile" css={{ height: '$18' }}>

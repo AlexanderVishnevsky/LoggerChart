@@ -14,7 +14,7 @@ const Main = (): JSX.Element => {
                 isPressable
                 isHoverable
                 variant="bordered"
-                css={{ mw: '200px', h: '200px' }}
+                css={{ w: '200px', h: '200px' }}
                 onClick={() => router.push(Routes.COLUMN_CHART)}
             >
                 <Card.Body css={S.Center}>

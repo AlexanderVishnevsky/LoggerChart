@@ -14,6 +14,8 @@ import {
     YAxis,
 } from 'recharts';
 
+import * as S from './ColumnChart.styles';
+
 const ColumnChart = ({ data }: { data: string }): JSX.Element => {
     const [selected, setSelected] = useState(['All', 'Unique', 'Event']);
     const [checked, setChecked] = useState(false);
@@ -29,7 +31,7 @@ const ColumnChart = ({ data }: { data: string }): JSX.Element => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="event" padding={{ left: 30, right: 30 }} />
             <YAxis />
-            <Tooltip label={'event'} />
+            <Tooltip label={'event'} contentStyle={{ color: 'var(--nextui-colors-black)' }} />
             <Legend />
         </>
     );
@@ -81,7 +83,7 @@ const ColumnChart = ({ data }: { data: string }): JSX.Element => {
                     </BarChart>
                 </ResponsiveContainer>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <S.ColumnChartLayout>
                 <Checkbox.Group
                     css={{ mt: 20 }}
                     label="Chart props"
@@ -89,6 +91,7 @@ const ColumnChart = ({ data }: { data: string }): JSX.Element => {
                     color="secondary"
                     onChange={setSelected}
                     value={selected}
+                    id={'checkbox-group'}
                 >
                     <Checkbox value="All" color={'gradient'}>
                         All events
@@ -110,16 +113,16 @@ const ColumnChart = ({ data }: { data: string }): JSX.Element => {
                     weight="bold"
                 >
                     <Switch
-                        css={{ ml: '50px', mr: '12px' }}
                         checked={checked}
                         onChange={() => setChecked((pr) => !pr)}
                         bordered
                         size="md"
                         color="secondary"
+                        id={'switcher'}
                     />
                     {checked ? 'Line chart' : 'Diagram chart'}
                 </Text>
-            </div>
+            </S.ColumnChartLayout>
         </>
     );
 };
